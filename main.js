@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 
 const TEXT_ENTRY = "#text-entry";
 const TITLE = "#title";
