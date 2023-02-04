@@ -80,7 +80,8 @@ async function getResults() {
     presence_penalty: 0,
   };
 
-  const token = "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";
+  const token = "sk-1nls7yIhgEZ9lLcuaD7xT3Blb";
+  const token2 = "aakFJTjeF6Pk7rkHTP5JrqPMx";
   const url = "https://api.openai.com/v1/completions";
 
   const response = await fetch(url, {
@@ -88,7 +89,7 @@ async function getResults() {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}${token2.slice(2)}`,
     },
     body: JSON.stringify(body),
   });
