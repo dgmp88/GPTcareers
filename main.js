@@ -80,7 +80,7 @@ async function getResults() {
     presence_penalty: 0,
   };
 
-  const token = "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";
+  const token = "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";
   const url = "https://api.openai.com/v1/completions";
 
   const response = await fetch(url, {
