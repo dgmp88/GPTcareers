@@ -35,7 +35,7 @@ const QUESTIONS = {
   },
 };
 
-function questionAnswered(event) {
+window.questionAnswered = (event) => {
   const questionElem = document.querySelector(BODY);
   const answer = document.querySelector(`${TEXT_ENTRY} input`).value;
   QUESTIONS[questionElem.textContent].answer = answer;
@@ -44,7 +44,7 @@ function questionAnswered(event) {
   const te = document.querySelector(TEXT_ENTRY);
   te.classList.add("invisible");
   nextStep();
-}
+};
 
 window.checkAnswer = (event) => {
   const inputElem = document.querySelector("#text-entry input");
@@ -70,7 +70,6 @@ async function getResults() {
   }
   prompt +=
     "Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
-  console.log("prompt", prompt);
   const body = {
     model: "text-davinci-003",
     prompt,
