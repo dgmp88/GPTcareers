@@ -16,3 +16,7 @@ input:focus {
 .text-shadow-md {
   text-shadow: 4px 4px 8px #ffffff;
 }
+
+.fancy-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-violet-500;
+}

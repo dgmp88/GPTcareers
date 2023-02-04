@@ -1,11 +1,12 @@
-DEBUG = true;
+const DEBUG = true;
 
-TEXT_ENTRY = "#text-entry";
-TITLE = "#title";
-BODY = "#body";
+const TEXT_ENTRY = "#text-entry";
+const TITLE = "#title";
+const BODY = "#body";
+const LOADING = "#loading";
 
 function typeText(text, elemId) {
-  console.log("Typeing", text, elemId);
+  console.log("Typing", text, elemId);
   const elem = document.querySelector(elemId);
   var idx = 0;
   const next = () => {
@@ -21,8 +22,8 @@ function typeText(text, elemId) {
 }
 const QUESTIONS = {
   "What are your hobbies?": {
-    placeholder: "e.g. reading, adventure sports, writing, gaming, cooking",
-    answer: "reading, adventure sports, writing, gaming, cooking",
+    placeholder: "e.g. reading, writing, gaming, cooking",
+    answer: "reading, writing, gaming, cooking",
   },
   "What are your biggest strengths?": {
     placeholder: "e.g. maths, people skills, drawing, writing",
@@ -35,18 +36,17 @@ const QUESTIONS = {
 };
 
 function questionAnswered(event) {
-  const question = document.querySelector(BODY).textContent;
+  const questionElem = document.querySelector(BODY);
   const answer = document.querySelector(`${TEXT_ENTRY} input`).value;
-  QUESTIONS[question] = answer;
+  QUESTIONS[questionElem.textContent].answer = answer;
 
+  questionElem.innerHTML = "";
   const te = document.querySelector(TEXT_ENTRY);
   te.classList.add("invisible");
   nextStep();
 }
 
-function checkAnswer(event) {
-  console.log(event.target.value);
-
+window.checkAnswer = (event) => {
   const inputElem = document.querySelector("#text-entry input");
   const submitButton = document.querySelector("#submit");
   if (inputElem.value.length == 0) {
@@ -54,19 +54,23 @@ function checkAnswer(event) {
   } else {
     submitButton.disabled = false;
   }
-}
+};
 
 async function getResults() {
+  // Show the loader
+  document.querySelector(LOADING).classList.remove("invisible");
+
   let prompt =
     "Conversation between a fantastic career coach and a high school student.\n";
 
-  for ([question, val] of Object.entries(QUESTIONS)) {
+  for (const [question, val] of Object.entries(QUESTIONS)) {
     prompt += "Coach: " + question + "\n";
+    console.log(val);
     prompt += "Student: " + val.answer + "\n";
   }
   prompt +=
     "Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
-
+  console.log("prompt", prompt);
   const body = {
     model: "text-davinci-003",
     prompt,
@@ -77,7 +81,7 @@ async function getResults() {
     presence_penalty: 0,
   };
 
-  const token = "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";
+  const token = "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";
   const url = "https://api.openai.com/v1/completions";
 
   const response = await fetch(url, {
@@ -90,6 +94,7 @@ async function getResults() {
     body: JSON.stringify(body),
   });
   const data = await response.json();
+  document.querySelector(LOADING).classList.add("invisible");
   typeText(data["choices"][0].text, BODY);
 }
 
