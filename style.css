@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="text"] {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+.text-shadow-md {
+  text-shadow: 4px 4px 8px #ffffff;
+}
