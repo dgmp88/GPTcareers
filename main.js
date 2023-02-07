@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 
 const TEXT_ENTRY = "#text-entry";
 const TITLE = "#title";
@@ -6,7 +6,6 @@ const BODY = "#body";
 const LOADING = "#loading";
 
 function typeText(text, elemId) {
-  console.log("Typing", text, elemId);
   const elem = document.querySelector(elemId);
   var idx = 0;
   const next = () => {
@@ -21,18 +20,30 @@ function typeText(text, elemId) {
   next();
 }
 const QUESTIONS = {
-  "What are your hobbies?": {
-    placeholder: "e.g. reading, writing, gaming, cooking",
-    answer: "reading, writing, gaming, cooking",
+  "What do you enjoy learning about?": {
+    placeholder: "",
   },
-  "What are your biggest strengths?": {
-    placeholder: "e.g. maths, people skills, drawing, writing",
-    answer: "maths, people skills",
+  "How do you like to spend your time?": {
+    placeholder: "",
   },
-  "Do you want to go to university?": {
-    placeholder: "yes/no",
-    answer: "no",
+  "Do you prefer manual labor or mental labor?": {
+    placeholder: "",
   },
+  // "Are you a routine person or a spontaneous person?": {
+  //   placeholder: "",
+  // },
+  // "Do you like working with others or by yourself?": {
+  //   placeholder: "",
+  // },
+  // "Which of your skills are you most proud of?": {
+  //   placeholder: "",
+  // },
+  // "Do you plan to go to university?": {
+  //   placeholder: "",
+  // },
+  // "Which of your strengths do you enjoy the most?": {
+  //   placeholder: "",
+  // },
 };
 
 window.questionAnswered = (event) => {
@@ -61,20 +72,24 @@ async function getResults() {
   document.querySelector(LOADING).classList.remove("invisible");
 
   let prompt =
-    "Conversation between a fantastic career coach and a high school student.\n";
+    "Pretend to be an incredibly knowledgeable and thoughtful career coach " +
+    "who is evaluating my answers to the following career questions. " +
+    "What career options should I consider? Please provide the top 10 suggestions and why I might be interested. " +
+    "Note, just because someone enjoys being social doesn't mean that they necessarily want to be a social media manager.  " +
+    "Keep in mind which are the most in-demand careers as well.\n";
 
   for (const [question, val] of Object.entries(QUESTIONS)) {
     prompt += "Coach: " + question + "\n";
-    console.log(val);
     prompt += "Student: " + val.answer + "\n";
   }
   prompt +=
     "Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
+  console.log("prompt", prompt);
   const body = {
     model: "text-davinci-003",
     prompt,
-    temperature: 0.1,
-    max_tokens: 256,
+    temperature: 0.01,
+    max_tokens: 1024,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
