@@ -20,6 +20,7 @@
 				nextQuestion();
 			}}
 			size="text-6xl text-center pb-10"
+			debug
 		/>
 		{#if showChat}
 			<Conversation />
