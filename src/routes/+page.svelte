@@ -1,37 +1,9 @@
 <script lang="ts">
 	import image from '$lib/images/matt-duncan-IUY_3DvM__w-unsplash.jpg';
 	import TypedText from '../components/TypedText.svelte';
-	import QuestionAndAnswer from '../components/QuestionAndAnswer.svelte';
-	let question = '';
-
-	const QUESTIONS = {
-		'What are your hobbies?': {
-			placeholder: 'e.g. reading, writing, gaming, cooking',
-			answer: 'reading, writing, gaming, cooking'
-		},
-		'What are your biggest strengths?': {
-			placeholder: 'e.g. maths, people skills, drawing, writing',
-			answer: 'maths, people skills'
-		},
-		'Do you want to go to university?': {
-			placeholder: 'yes/no',
-			answer: 'no'
-		}
-	};
-
-	let questionIndex = 0;
-	console.log(questionIndex);
-
-	function nextQuestion() {
-		console.log('nextQ', questionIndex);
-		// Set to empty string to force re-render
-		question = '';
-		let nextQ = Object.keys(QUESTIONS)[questionIndex];
-		setTimeout(() => {
-			question = nextQ;
-		}, 100);
-		questionIndex += 1;
-	}
+	import Conversation from '../components/Conversation.svelte';
+	import { nextQuestion } from '../stores';
+	let showChat = false;
 </script>
 
 <div
@@ -40,8 +12,17 @@
 />
 
 <div class="grid place-content-center w-screen h-screen">
-	<TypedText text="Find your path" done={nextQuestion} size="text-6xl text-center" />
-	{#if question}
-		<QuestionAndAnswer {question} done={nextQuestion} />
-	{/if}
+	<div class="w-96 md:w-[35rem]">
+		<TypedText
+			text="Find your path"
+			done={() => {
+				showChat = true;
+				nextQuestion();
+			}}
+			size="text-6xl text-center pb-10"
+		/>
+		{#if showChat}
+			<Conversation />
+		{/if}
+	</div>
 </div>
