@@ -1,4 +1,4 @@
-export const questions = [
+const questions = [
 	'What do you enjoy learning about?',
 	'How do you like to spend your time?',
 	'Do you prefer manual labor or mental labor?',
@@ -14,3 +14,11 @@ export const questions = [
 	'What do you want to do more of?',
 	'What motivates you?'
 ];
+
+export const getNextQuestion = (): string => {
+	const q = questions.shift();
+	if (q === undefined) {
+		return '';
+	}
+	return q;
+};

@@ -4,7 +4,6 @@
 	export let debug = false;
 	export let size = 'text-4xl';
 	let currentText = '';
-	console.log('typed text', text);
 	let idx = 0;
 	const next = () => {
 		idx += 1;
