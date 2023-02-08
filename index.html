@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    
+    <script type="module" crossorigin src="/assets/index-526f8b91.js"></script>
+    <link rel="stylesheet" href="/assets/index-bc4c146f.css">
+  </head>
+  <body>
+    <!-- class="absolute -z-10 w-screen h-screen bg-gradient-to-tl from-green-500 to-violet-200" -->
+    <div
+      class="bg-[url('/matt-duncan-IUY_3DvM__w-unsplash.jpg')] w-screen h-screen bg-cover bg-center absolute -z-10 blur"
+    ></div>
+    <div
+      class="w-screen h-screen absolute grid place-items-center invisible"
+      id="loading"
+    >
+      <div class="text-center fancy-text text-4xl">randomJoke</div>
+      <img src="/loading.svg" class="w-96" />
+    </div>
+    <div class="hero h-screen">
+      <div class="hero-content fancy-text p-6">
+        <div>
+          <div class="text-8xl" id="title"></div>
+          <div class="text-xl pt-12 whitespace-pre-line" id="body"></div>
+          <div class="text-lg py-2 invisible grid space-y-2" id="text-entry">
+            <input
+              class="rounded-none caret-white mb-8 text-gray-200"
+              placeholder=""
+              type="text"
+              onkeyup="checkAnswer(event)"
+            />
+            <button
+              class="btn btn-outline btn-primary w-20 mx-auto"
+              onclick="questionAnswered(event)"
+              id="submit"
+              disabled
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
