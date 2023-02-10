@@ -2,6 +2,7 @@
 	import image from '$lib/images/matt-duncan-IUY_3DvM__w-unsplash.jpg';
 	import TypedText from '../components/TypedText.svelte';
 	import Conversation from '../components/Conversation.svelte';
+	// import Results from '../components/Results.svelte';
 	let showChat = false;
 </script>
 

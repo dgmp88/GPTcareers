@@ -1,3 +1,10 @@
+export const start =
+	'Pretend to be an incredibly knowledgeable and thoughtful career coach ' +
+	'who is evaluating my answers to the following career questions. ' +
+	'What career options should I consider? Please provide the top 10 suggestions and why I might be interested. ' +
+	"Note, just because someone enjoys being social doesn't mean that they necessarily want to be a social media manager.  " +
+	'Keep in mind which are the most in-demand careers as well.\n';
+
 const questions = [
 	'What do you enjoy learning about?',
 	'How do you like to spend your time?',
@@ -14,6 +21,9 @@ const questions = [
 	'What do you want to do more of?',
 	'What motivates you?'
 ];
+
+export const finish =
+	'Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n';
 
 export const getNextQuestion = (): string => {
 	const q = questions.shift();

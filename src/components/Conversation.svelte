@@ -1,27 +1,28 @@
 <script lang="ts">
+	import { Result } from 'postcss';
 	import { tick } from 'svelte';
-	import { getNextQuestion } from '../data';
-	type Chat = {
-		qa: 'q' | 'a';
-		content: string;
-	};
+	import { getResults } from '../api';
+	import { getNextQuestion } from '../prompts';
+	import type { Chat } from '../types';
 
 	let awaitingResponse = true;
 
-	const showDebug = false;
-
+	const showDebug = true;
 	let chats: Chat[] = [];
-
 	if (!showDebug) {
 		chats.push({ qa: 'q', content: getNextQuestion() });
 	} else {
-		let chats: Chat[] = [];
 		while (true) {
 			let nextQ = getNextQuestion();
 			if (nextQ === '' || chats.length == 1000) break;
 			chats = [...chats, { qa: 'q', content: nextQ }];
 			chats = [...chats, { qa: 'a', content: 'my answer' }];
 		}
+		getResults(chats).then((res) => {
+			console.log('Adding a thing!');
+			chats = [...chats, { qa: 'r', content: res }];
+			// chats.push({ qa: 'r', content: res });
+		});
 	}
 
 	$: value = ''; // text value
@@ -56,10 +57,11 @@
 
 <div class="overflow-y-auto w-96 md:w-[35rem] p-1">
 	{#each chats as chat}
-		<div class="chat {chat.qa == 'q' ? 'chat-start' : 'chat-end'} transition-opacity">
+		{{}}
+		<div class="chat {chat.qa == 'a' ? 'chat-end' : 'chat-start'} transition-opacity">
 			<div
 				class="
-				chat-bubble transition-opacity {chat.qa == 'q' ? 'chat-bubble-primary' : 'chat-bubble-secondary'}
+				chat-bubble transition-opacity {chat.qa == 'a' ? 'chat-bubble-secondary' : 'chat-bubble-primary'}
 				bg-opacity-50
 				animate-fade-in
 				"
