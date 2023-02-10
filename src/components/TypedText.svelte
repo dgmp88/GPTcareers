@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let text: string;
 	export let done: () => void;
-	export let debug = false;
+	export let debug: boolean;
 	export let size = 'text-4xl';
 	let currentText = '';
 	let idx = 0;
