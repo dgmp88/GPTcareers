@@ -1,38 +1,39 @@
 <script lang="ts">
 	import type { Chat } from '../types';
-	import image from '$lib/images/matt-duncan-IUY_3DvM__w-unsplash.jpg';
 	import TypedText from '../components/TypedText.svelte';
+	import Result from '../components/Result.svelte';
 	import Conversation from '../components/Conversation.svelte';
 	import { getResults } from '../api';
-	import { getNextQuestion } from '../prompts';
+	import { questions } from '../prompts';
 	import TextInput from '../components/TextInput.svelte';
 	import { sleep } from '../util';
-
-	let showChat = false;
-	let awaitingResponse = false;
+	import Background from '../components/Background.svelte';
 
 	const debug = false;
+	let showChat = false;
+	let awaitingResponse = false;
+	let result = '';
+
 	let chats: Chat[] = [];
 	if (debug) {
-		while (true) {
-			let nextQ = getNextQuestion();
-			if (nextQ === '' || chats.length == 1000) break;
-			chats = [...chats, { qa: 'q', content: nextQ }];
+		for (let question of questions) {
+			chats = [...chats, { qa: 'q', content: question }];
 			chats = [...chats, { qa: 'a', content: 'my answer' }];
 		}
-		getResults(chats).then((res) => {
-			chats = [...chats, { qa: 'r', content: res }];
+		getResults(chats, true).then((res) => {
+			result = res;
 		});
 	}
 
+	let questionIndex = 0;
 	const askNextquestion = async () => {
-		const nextQ = getNextQuestion();
-		if (nextQ === '') {
+		if (questionIndex > questions.length - 1) {
 			return true;
 		}
 
 		await sleep(750);
-		chats = [...chats, { qa: 'q', content: nextQ }];
+		chats = [...chats, { qa: 'q', content: questions[questionIndex] }];
+		questionIndex++;
 		await sleep(750);
 
 		awaitingResponse = true;
@@ -45,30 +46,42 @@
 		awaitingResponse = false;
 		const noQsLeft = await askNextquestion();
 		if (noQsLeft) {
-			console.log('get final response');
+			console.log('hit!');
+			getResults(chats, true).then((res) => {
+				console.log('gotResults');
+				result = res;
+				console.log('result =', result);
+			});
 		}
 	};
 </script>
 
-<div
-	class="w-screen h-screen bg-cover bg-center -z-10 absolute blur"
-	style={`background-image: url(${image})`}
-/>
+<Background />
 
-<div class="grid place-content-center mx-auto h-screen">
-	<TypedText
-		text="Find your path"
-		done={() => {
-			showChat = true;
-			askNextquestion();
-		}}
-		size="text-6xl text-center pb-10"
-		{debug}
-	/>
+<div class="flex flex-wrap justify-center  space-x-8 h-screen w-screen">
+	<div class="w-full">
+		<TypedText
+			text="Find your path"
+			done={() => {
+				showChat = true;
+				askNextquestion();
+			}}
+			size="text-6xl text-center pb-10"
+			{debug}
+		/>
+	</div>
 	{#if showChat}
-		<Conversation {chats} />
-		{#if awaitingResponse}
-			<TextInput {submitResponse} />
-		{/if}
+		<div class="max-w-xl">
+			<Conversation {chats} />
+			{#if awaitingResponse}
+				<TextInput {submitResponse} />
+			{/if}
+		</div>
+	{/if}
+
+	{#if result !== ''}
+		<div class="max-w-xl">
+			<Result {result} />
+		</div>
 	{/if}
 </div>

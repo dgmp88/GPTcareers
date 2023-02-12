@@ -20,7 +20,8 @@
 <div
 	class={`
     p-2 ${size}
-	bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-violet-500`}
+	w-fit mx-auto
+	bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary`}
 >
 	{currentText}
 </div>

@@ -3,7 +3,7 @@
 	export let chats: Chat[];
 </script>
 
-<div class="overflow-y-auto w-96 md:w-[35rem] p-1">
+<div class="overflow-y-auto p-1">
 	{#each chats as chat}
 		<div class="chat {chat.qa == 'a' ? 'chat-end' : 'chat-start'} transition-opacity">
 			<div

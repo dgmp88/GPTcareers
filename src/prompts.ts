@@ -5,7 +5,7 @@ export const start =
 	"Note, just because someone enjoys being social doesn't mean that they necessarily want to be a social media manager.  " +
 	'Keep in mind which are the most in-demand careers as well.\n';
 
-const questions = [
+export const questions = [
 	'What do you enjoy learning about?',
 	'How do you like to spend your time?',
 	'Do you prefer manual labor or mental labor?',
@@ -24,11 +24,3 @@ const questions = [
 
 export const finish =
 	'Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n';
-
-export const getNextQuestion = (): string => {
-	const q = questions.shift();
-	if (q === undefined) {
-		return '';
-	}
-	return q;
-};

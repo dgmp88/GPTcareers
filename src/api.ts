@@ -1,12 +1,14 @@
 import { start, finish } from './prompts';
 import type { Chat } from './types';
 
-export async function getResults(chats: Chat[]) {
+export async function getResults(chats: Chat[], debug = false) {
 	let prompt = start;
 	for (const { qa, content } of chats) {
 		prompt += `${qa == 'q' ? 'Coach' : 'Student'}: ${content}\n`;
 	}
 	prompt += finish;
+
+	if (debug) return prompt;
 
 	console.log('prompt', prompt);
 	const body = {
@@ -22,7 +24,6 @@ export async function getResults(chats: Chat[]) {
 	const token = 'sk-1nls7yIhgEZ9lLcuaD7xT3Blb';
 	const token2 = 'aakFJTjeF6Pk7rkHTP5JrqPMx';
 	const url = 'https://api.openai.com/v1/completions';
-	return prompt;
 	const response = await fetch(url, {
 		method: 'POST',
 		headers: {
