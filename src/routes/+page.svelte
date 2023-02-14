@@ -2,12 +2,12 @@
 	import type { Chat } from '../types';
 	import TypedText from '../components/TypedText.svelte';
 	import Result from '../components/Result.svelte';
+	import TextInput from '../components/TextInput.svelte';
+	import Background from '../components/Background.svelte';
 	import Conversation from '../components/Conversation.svelte';
 	import { getResults } from '../api';
 	import { questions } from '../prompts';
-	import TextInput from '../components/TextInput.svelte';
 	import { sleep } from '../util';
-	import Background from '../components/Background.svelte';
 
 	const debug = false;
 	let showChat = false;
