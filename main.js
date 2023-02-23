@@ -21,30 +21,43 @@ function typeText(text, elemId) {
 }
 const QUESTIONS = {
   "What do you enjoy learning about?": {
-    placeholder: "",
+    placeholder: "e.g. maths, history, economics, art, writing",
   },
   "How do you like to spend your time?": {
-    placeholder: "",
+    placeholder: "e.g. reading, writing, socialsing, gaming, cooking",
   },
-  "Do you prefer manual labor or mental labor?": {
-    placeholder: "",
+  "Which of your skills are you most proud of?": {
+    placeholder: "e.g. my ability to talk to anyone",
   },
-  // "Are you a routine person or a spontaneous person?": {
-  //   placeholder: "",
-  // },
-  // "Do you like working with others or by yourself?": {
-  //   placeholder: "",
-  // },
-  // "Which of your skills are you most proud of?": {
-  //   placeholder: "",
-  // },
-  // "Do you plan to go to university?": {
-  //   placeholder: "",
-  // },
-  // "Which of your strengths do you enjoy the most?": {
-  //   placeholder: "",
-  // },
+  "Do you want to go to university?": {
+    placeholder: "yes/no",
+  },
+  "Do you like working with others or by yourself?": {
+    placeholder: "e.g. working with others, working by myself",
+  },
+  "Do you see yourself doing manual labor or mental labor?": {
+    placeholder: "e.g. manual labor, mental labor",
+  },
+  "Are you a routine person or a spontaneous person?": {
+    placeholder: "e.g. routine, spontaneous",
+  },
 };
+
+// "Are you a routine person or a spontaneous person?": {
+//   placeholder: "",
+// },
+// "Do you like working with others or by yourself?": {
+//   placeholder: "",
+// },
+// "Which of your skills are you most proud of?": {
+//   placeholder: "",
+// },
+// "Do you plan to go to university?": {
+//   placeholder: "",
+// },
+// "Which of your strengths do you enjoy the most?": {
+//   placeholder: "",
+// },
 
 window.questionAnswered = (event) => {
   const questionElem = document.querySelector(BODY);
@@ -72,18 +85,18 @@ async function getResults() {
   document.querySelector(LOADING).classList.remove("invisible");
 
   let prompt =
-    "Pretend to be an incredibly knowledgeable and thoughtful career coach " +
-    "who is evaluating my answers to the following career questions. " +
-    "What career options should I consider? Please provide the top 10 suggestions and why I might be interested. " +
-    "Note, just because someone enjoys being social doesn't mean that they necessarily want to be a social media manager.  " +
-    "Keep in mind which are the most in-demand careers as well.\n";
+    "Pretend to be the most incredibly knowledgeable and thoughtful career coach who really cares about helping people find their ikigai. Ikigai is the perfect balance between what you are good at, what you love, what the world needs, and what you can be paid for." +
+    "Note, just because someone enjoys being social doesn't mean that they necessarily want to be a social media manager." +
+    "Keep in mind which are the most in-demand careers as well." +
+    'If someone doesn\'t provide enough useful information in the answers, respond with "Sorry that was not enough information to give you a personalised response, the more you put into giving me the correct answers, the more you will get out of it" ' +
+    "Keeping this in mind, evaluate the answers to the following career questions. What career options should I consider? Please provide the top 10 suggestions and why I might be interested.";
 
   for (const [question, val] of Object.entries(QUESTIONS)) {
     prompt += "Coach: " + question + "\n";
     prompt += "Student: " + val.answer + "\n";
   }
   prompt +=
-    "Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
+    "Coach: OK, great. Here are some suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
   console.log("prompt", prompt);
   const body = {
     model: "text-davinci-003",
