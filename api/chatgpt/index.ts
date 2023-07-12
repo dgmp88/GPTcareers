@@ -17,10 +17,11 @@ function buildResponse(body: any) {
     "X-Requested-With, Content-Type, Accept"
   );
 
-  response.headers.set("Content-Type", "text/event-stream");
+  response.headers.set("Content-Type", "application/json");
+  // response.headers.set("Content-Type", "text/event-stream");
   response.headers.set("Cache-Control", "no-cache");
   response.headers.set("Connection", "keep-alive");
-  response.headers.set("Content-Encoding", "none");
+  // response.headers.set("Content-Encoding", "none");
   return response;
 }
 
@@ -33,7 +34,7 @@ export default async function post(request: Request) {
 
   const body = {
     model: "gpt-3.5-turbo",
-    stream: true,
+    stream: false,
     messages,
   };
 
@@ -46,6 +47,7 @@ export default async function post(request: Request) {
     body: JSON.stringify(body),
   };
   const chatReq = await fetch(url, options);
-
-  return buildResponse(chatReq.body);
+  // return buildResponse(chatReq.body);
+  const response = await chatReq.json();
+  return buildResponse(JSON.stringify(response));
 }

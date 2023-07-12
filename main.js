@@ -23,12 +23,12 @@ const QUESTIONS = {
   "What do you enjoy learning about?": {
     placeholder: "",
   },
-  "How do you like to spend your time?": {
-    placeholder: "",
-  },
-  "Do you prefer manual labor or mental labor?": {
-    placeholder: "",
-  },
+  // "How do you like to spend your time?": {
+  //   placeholder: "",
+  // },
+  // "Do you prefer manual labor or mental labor?": {
+  //   placeholder: "",
+  // },
   // "Are you a routine person or a spontaneous person?": {
   //   placeholder: "",
   // },
@@ -84,30 +84,33 @@ async function getResults() {
   }
   prompt +=
     "Coach: OK, great. Here are 3 suggestions for careers you might want to explore, sensible next steps for each, and the amount of additional education required:\n";
-  console.log("prompt", prompt);
-  const body = {
-    model: "text-davinci-003",
-    prompt,
-    temperature: 0.01,
-    max_tokens: 1024,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  };
 
-  const url = "https://gptcareers.vercel.app/";
+  const url = import.meta.env.VITE_API_URL;
+  console.log("request");
 
-  const response = await fetch(url, {
+  const response = await fetch(`${url}/api/chatgpt`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    }),
   });
+
+  console.log("response ", response);
+
   const data = await response.json();
+  console.log("data", data);
   document.querySelector(LOADING).classList.add("invisible");
-  typeText(data["choices"][0].text, BODY);
+  typeText(data.choices[0].message.content, BODY);
+  // typeText(data["choices"][0].text, BODY);
 }
 
 // Intro
