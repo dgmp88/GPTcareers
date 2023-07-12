@@ -7,8 +7,8 @@ const url = "https://api.openai.com/v1/chat/completions";
 function buildResponse(request: Request, body: any) {
   const response = new Response(body);
   const { host } = new URL(request.url);
-  console.log(host);
-  if (host === "thecareerfinder.app") {
+  console.log("host = ", host);
+  if (host === "gptcareers.vercel.app") {
     response.headers.set("Access-Control-Allow-Origin", response.url);
   } else {
     response.headers.set("Access-Control-Allow-Origin", "");
