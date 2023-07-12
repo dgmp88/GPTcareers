@@ -6,13 +6,11 @@ const url = "https://api.openai.com/v1/chat/completions";
 
 function buildResponse(request: Request, body: any) {
   const response = new Response(body);
-  const { host } = new URL(request.url);
-  console.log("host = ", host);
-  if (host === "gptcareers.vercel.app") {
-    response.headers.set("Access-Control-Allow-Origin", response.url);
-  } else {
-    response.headers.set("Access-Control-Allow-Origin", "");
-  }
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    "https://thecareerfinder.app"
+  );
+
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   response.headers.set(
