@@ -95,16 +95,13 @@ async function getResults() {
     presence_penalty: 0,
   };
 
-  const token = "sk-1nls7yIhgEZ9lLcuaD7xT3Blb";
-  const token2 = "aakFJTjeF6Pk7rkHTP5JrqPMx";
-  const url = "https://api.openai.com/v1/completions";
+  const url = "https://gptcareers.vercel.app/";
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}${token2.slice(2)}`,
     },
     body: JSON.stringify(body),
   });
