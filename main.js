@@ -23,12 +23,12 @@ const QUESTIONS = {
   "What do you enjoy learning about?": {
     placeholder: "",
   },
-  "How do you like to spend your time?": {
-    placeholder: "",
-  },
-  "Do you prefer manual labor or mental labor?": {
-    placeholder: "",
-  },
+  // "How do you like to spend your time?": {
+  //   placeholder: "",
+  // },
+  // "Do you prefer manual labor or mental labor?": {
+  //   placeholder: "",
+  // },
   // "Are you a routine person or a spontaneous person?": {
   //   placeholder: "",
   // },
