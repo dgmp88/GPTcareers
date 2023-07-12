@@ -4,12 +4,10 @@ export const config = {
 
 const url = "https://api.openai.com/v1/chat/completions";
 
-function buildResponse(body: any) {
+function buildResponse(request: Request, body: any) {
   const response = new Response(body);
-  response.headers.set(
-    "Access-Control-Allow-Origin",
-    "https://thecareerfinder.app/"
-  );
+  // request.url;
+  response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   response.headers.set(
@@ -27,7 +25,7 @@ function buildResponse(body: any) {
 
 export default async function post(request: Request) {
   if (request.method === "OPTIONS") {
-    return buildResponse("ok");
+    return buildResponse(request, "ok");
   }
 
   const { messages } = await request.json();
@@ -49,5 +47,5 @@ export default async function post(request: Request) {
   const chatReq = await fetch(url, options);
   // return buildResponse(chatReq.body);
   const response = await chatReq.json();
-  return buildResponse(JSON.stringify(response));
+  return buildResponse(request, JSON.stringify(response));
 }
