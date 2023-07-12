@@ -12,7 +12,7 @@ function typeText(text, elemId) {
     elem.innerHTML = text.slice(0, idx);
     idx += 1;
     if (idx <= text.length) {
-      window.setTimeout(next, DEBUG ? 0 : 60);
+      window.setTimeout(next, DEBUG ? 0 : 6);
     } else {
       nextStep();
     }
