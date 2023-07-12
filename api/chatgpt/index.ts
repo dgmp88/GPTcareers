@@ -6,10 +6,12 @@ const url = "https://api.openai.com/v1/chat/completions";
 
 function buildResponse(request: Request, body: any) {
   const response = new Response(body);
-  response.headers.set(
-    "Access-Control-Allow-Origin",
-    "https://thecareerfinder.app"
-  );
+  const origin = request.headers.get("Origin") || "";
+  const { host } = new URL(origin);
+
+  if (host === "thecareerfinder.app") {
+    response.headers.set("Access-Control-Allow-Origin", origin);
+  }
 
   response.headers.set("Access-Control-Allow-Credentials", "true");
   response.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
